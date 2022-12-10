@@ -1,0 +1,132 @@
+{
+    "World":[
+        {
+            "Entity": "Afghanistan",
+            "Code": "AFG",
+            "Year": 2010,
+            "Alcohol": 3.7,
+            "Continent": "Asia",
+            "Male": 4.9,
+            "Female": 2.4
+          },
+          {
+            "Entity": "India",
+            "Code": "IND",
+            "Year": 2010,
+            "Alcohol": 15.1,
+            "Continent": "Asia",
+            "Male": 24.8,
+            "Female": 4.8
+          },
+          {
+            "Entity": "Australia",
+            "Code": "AUS",
+            "Year": 2010,
+            "Alcohol": 84,
+            "Continent": "Australia",
+            "Male": 88,
+            "Female": 80.1
+          },
+          {
+            "Entity": "Brazil",
+            "Code": "BRA",
+            "Year": 2010,
+            "Alcohol": 57.7,
+            "Continent": "South America",
+            "Male": 63.3,
+            "Female": 46.8
+          },
+          {
+            "Entity": "Canada",
+            "Code": "CAN",
+            "Year": 2010,
+            "Alcohol": 77.1,
+            "Continent": "North America",
+            "Male": 80.3,
+            "Female": 73.9
+          },
+          {
+            "Entity": "China",
+            "Code": "CHN",
+            "Year": 2010,
+            "Alcohol": 44.1,
+            "Continent": "Asia",
+            "Male": 58.4,
+            "Female": 28.9
+          },
+          {
+            "Entity": "Dominican Republic",
+            "Code": "DOM",
+            "Year": 2010,
+            "Alcohol": 55.2,
+            "Continent": "South America",
+            "Male": 66.8,
+            "Female": 43.8
+          },
+          {
+            "Entity": "Egypt",
+            "Code": "EGY",
+            "Year": 2010,
+            "Alcohol": 6.5,
+            "Continent": "Africa",
+            "Male": 8.6,
+            "Female": 4.3
+          },
+          {
+            "Entity": "Finland",
+            "Code": "FIN",
+            "Year": 2010,
+            "Alcohol": 68,
+            "Continent": "Europe",
+            "Male": 74.1,
+            "Female": 62.2
+          },
+          {
+            "Entity": "France",
+            "Code": "FRA",
+            "Year": 2010,
+            "Alcohol": 94.8,
+            "Continent": "Europe",
+            "Male": 96.5,
+            "Female": 93.3
+          },
+          {
+            "Entity": "Iceland",
+            "Code": "ISL",
+            "Year": 2010,
+            "Alcohol": 67.9,
+            "Continent": "Europe",
+            "Male": 73.8,
+            "Female": 61.9
+          },
+          {
+            "Entity": "Japan",
+            "Code": "JPN",
+            "Year": 2010,
+            "Alcohol": 68.9,
+            "Continent": "Asia",
+            "Male": 76.4,
+            "Female": 61.9
+          },
+          {
+            "Entity": "United Kingdom",
+            "Code": "GBR",
+            "Year": 2010,
+            "Alcohol": 83.9,
+            "Continent": "Europe",
+            "Male": 87,
+            "Female": 81
+          },
+          {
+            "Entity": "United States",
+            "Code": "USA",
+            "Year": 2010,
+            "Alcohol": 68.9,
+            "Continent": "North America",
+            "Male": 75.2,
+            "Female": 63
+          }
+    ]
+}
+    
+    
