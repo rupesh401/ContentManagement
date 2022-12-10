@@ -1,0 +1,26 @@
+h1 {
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+}
+
+svg {
+    text-align: center;
+    margin-left: 195;
+}
+
+.pos {
+    margin-left: auto;
+    margin-right: auto;
+    margin-left: 25%;
+}
+
+p {
+    text-align: center;
+}
+
+footer {
+    margin-top: 5%;
+}
