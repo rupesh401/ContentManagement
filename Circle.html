@@ -1,0 +1,156 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Graph - Circle</title>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400;1,500;1,700&display=swap');
+
+        * {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        nav a {
+            font-weight: bold;
+            font-size: 18px;
+            color: white !important;
+
+        }
+
+        nav a:hover {
+            color: greenyellow;
+        }
+
+        h1 {
+            font-weight: bold;
+            margin: 1em;
+        }
+
+        .para {
+            font-weight: bold;
+            color: red;
+        }
+
+        footer {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-white bg-dark">
+        <a class="navbar-brand" href="Circle.html"><i class="fa fa-users" aria-hidden="true"></i></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="Circle.html">Circle<span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="pieChart.html">PieChart</a>
+                <a class="nav-item nav-link" href="treegraph.html">TreeGraph</a>
+                <a class="nav-item nav-link" href="worldgraph.html">WorldGraph</a>
+                <a class="nav-item nav-link" href="bar-graph.html">Bar Graph</a>
+                <a class="nav-item nav-link" href="lolipop.html">Lolipop</a>
+                <a class="nav-item nav-link" href="Linegraph.html">LineGraph</a>
+                <a class="nav-item nav-link" href="last.html">Race Graph</a>
+
+            </div>
+        </div>
+    </nav>
+    <div id="vizContainer">
+        <h1>Alcohol consumption - Circle</h1>
+        <P class="para">*Hover over the circle to see the percentage</P>
+        <div class="pos">
+            <svg>
+            </svg>
+        </div>
+    </div>
+    <footer class="text-bold">
+        <p>Project 2 Group - D3</p>
+    </footer>
+    <script>
+        d3.select("svg")
+            .attr("style", "height:500px; width:750px; border: 2px black solid;margin-left:2.5em;margin-right:auto");
+
+        d3.csv("./Data/AlcoholconsumptionReport.csv", (error, data) => {
+            if (error)
+                console.log(error);
+            else
+                overallTeamViz(data);
+        });
+
+        function overallTeamViz(incomingData) {
+
+            d3.select("svg")
+                .append("g")
+                .attr("id", "teamsG")
+                .attr("transform", "translate(50, 300)")
+                .selectAll("g")
+                .data(incomingData)
+                .enter()
+                .append("g")
+                .attr("class", "overallG")
+                .attr("transform", (d, i) => `translate(${(i*50)}, 0)`);
+
+            var teamG = d3.selectAll("g.overallG");
+
+            teamG.append("circle")
+                .attr("r", 0)
+                .transition()
+                .delay((d, i) => i * 100)
+                .duration(1000)
+                .attr("r", 40)
+                .transition()
+                .duration(1000)
+                .attr("r", 20)
+                .style("fill", "#ce9162")
+
+            // append the label
+            teamG.append("text")
+                .attr("y", 80)
+                .style("text-anchor", "middle")
+                .text(d => d.Code);
+            teamG.on("mouseover", highlightRegion);
+            teamG.on("mouseout", unhighlightRegion);
+
+            function highlightRegion(d) {
+                d3.select(this)
+                    .select("text")
+                    .classed("active", "true")
+                    .text(d => d.Alcohol)
+                    .attr("y", 5);
+                d3.selectAll("g.overallG")
+                    .select("circle")
+                    .each(
+                        function (p) {
+                            p.Code == d.Code ?
+                                d3.select(this).classed("active", true) :
+                                d3.select(this).classed("inactive", true);
+                        }
+                    );
+                this.parentElement.appendChild(this);
+            }
+
+            function unhighlightRegion(d) {
+                d3.selectAll("g.overallG")
+                    .select("circle")
+                    .attr("class", "");
+
+                d3.selectAll("g.overallG")
+                    .select("text")
+                    .classed("active", false)
+                    .attr("y", 80)
+                    .text(d => d.Code)
+            }
+        }
+    </script>
+</body>
+
+</html>

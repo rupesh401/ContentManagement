@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+
+<head>
+    <title></title>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400;1,500;1,700&display=swap');
+
+        * {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        nav a {
+            font-weight: bold;
+            font-size: 18px;
+            color: white;
+
+        }
+
+        nav a:hover {
+            color: greenyellow;
+        }
+
+        h1 {
+            font-weight: bold;
+            margin: 1em;
+        }
+
+        footer {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-white bg-dark">
+        <a class="navbar-brand" href="Circle.html"><i class="fa fa-users" aria-hidden="true"></i></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="Circle.html">Circle<span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="pieChart.html">PieChart</a>
+                <a class="nav-item nav-link" href="treegraph.html">TreeGraph</a>
+                <a class="nav-item nav-link" href="worldgraph.html">WorldGraph</a>
+                <a class="nav-item nav-link" href="bar-graph.html">Bar Graph</a>
+                <a class="nav-item nav-link" href="lolipop.html">Lolipop</a>
+                <a class="nav-item nav-link" href="Linegraph.html">LineGraph</a>
+                <a class="nav-item nav-link" href="last.html">Race Graph</a>
+
+            </div>
+        </div>
+    </nav>
+    <h1 class="">Alcohol Consumption - Tree Graph</h1>
+    <P class="para" style="color: red;">*Hover over the node circles to see the percentage</P>
+    <div id="vizContainer" class="pos">
+        <svg> </svg>
+    </div>
+    <footer class="text-bold">
+        <p>Project 2 Group - D3</p>
+    </footer>
+    <script>
+        d3.select("svg")
+            .attr("style", "height:700px; width:750px; border: 2px black solid;margin-left:auto;margin-right:auto");
+
+        d3.json("Data/AlcoholconsumptionReport.json", viz);
+
+        function viz(data) {
+            var depthScale = d3.scaleOrdinal()
+                .range(["#B4CDCD", "#C0D9D9", "#E0EEEE", "#00CDCD"]);
+            var nestedData = d3.nest()
+                .key(d => d.Continent)
+                .entries(data.World);
+
+            var packableData = {
+                id: "World",
+                values: nestedData
+            };
+
+            var root = d3.hierarchy(packableData, d => d.values);
+
+            var treeChart = d3.tree();
+            treeChart.size([600, 600]);
+
+            var treeData = treeChart(root).descendants();
+
+            d3.select("svg")
+                .append("g")
+                .attr("id", "treeG")
+                .attr("transform", "translate(60, 20)")
+                .selectAll("g")
+                .data(treeData)
+                .enter()
+                .append("g")
+                .attr("class", "node")
+                .attr("transform", d => `translate(${d.y}, ${d.x})`);
+
+            d3.selectAll("g.node")
+                .append("circle")
+                .attr("r", 0.5 * (treeData.length + 5))
+                .style("fill", d => depthScale(d.depth))
+                .style("stroke", "white")
+                .style("stroke-width", "2px")
+                .on("mouseover", clickFunction);
+
+            d3.selectAll("g.node")
+                .append("text")
+                .style("text-anchor", "middle")
+                .style("fill", "#4f442b")
+                .text(d => d.data.id || d.data.key || d.data.Entity)
+                .on("mouseover", clickFunction);
+
+            d3.select("#treeG")
+                .selectAll("line")
+                .data(treeData.filter(d => d.parent))
+                .enter()
+                .insert("line", "g")
+                .attr("x1", d => d.parent.y)
+                .attr("y1", d => d.parent.x)
+                .attr("x2", d => d.y)
+                .attr("y2", d => d.x)
+                .style("stroke", "black")
+
+            function clickFunction(d) {
+                d3.select("h2")
+                    .text("Country:" + d.data.Entity + " " + "-Male:" + d.data.Male + "%" + "-" + "Female:" + d.data
+                        .Female + "%");
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,98 @@
+<html>
+
+<head>
+  <title>D3 - Chapter 3 - Example 2 </title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400;1,500;1,700&display=swap');
+
+    * {
+      font-family: 'Roboto', sans-serif;
+    }
+
+    nav a {
+      font-weight: bold;
+      font-size: 18px;
+      color: white;
+
+    }
+
+    nav a:hover {
+      color: greenyellow;
+    }
+
+    h1 {
+      font-weight: bold;
+      margin: 1em;
+    }
+
+    footer {
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-white bg-dark">
+    <a class="navbar-brand" href="Circle.html"><i class="fa fa-users" aria-hidden="true"></i></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link active" href="Circle.html">Circle<span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link" href="pieChart.html">PieChart</a>
+        <a class="nav-item nav-link" href="treegraph.html">TreeGraph</a>
+        <a class="nav-item nav-link" href="worldgraph.html">WorldGraph</a>
+        <a class="nav-item nav-link" href="bar-graph.html">Bar Graph</a>
+        <a class="nav-item nav-link" href="lolipop.html">Lolipop</a>
+        <a class="nav-item nav-link" href="Linegraph.html">LineGraph</a>
+        <a class="nav-item nav-link" href="last.html">Race Graph</a>
+
+      </div>
+    </div>
+  </nav>
+  <div id="vizContainer">
+    <h1>Alcohol consumption - Pie Chart</h1>
+    <h2 class="text-red" style="color: red;"></h2>
+    <svg style="width:1000px;height:500px">
+    </svg>
+  </div>
+  <footer class="text-bold">
+    <p>Project 2 Group - D3</p>
+  </footer>
+  <script>
+    d3.csv("Data/AlcoholconsumptionReport.csv", pieChart);
+
+    function pieChart(data) {
+      var pieChart = d3.pie();
+      var newArc = d3.arc().innerRadius(0).outerRadius(180);
+      pieChart.value(d => d.Alcohol).sort();
+      var colorScale = d3.scaleOrdinal()
+        .range(["#00FFFF", "#7FFFD4", "#454B1B", "#088F8F", "#AAFF00", "#5F9EA0", "#097969",
+          "#AFE1AF", "#DFFF00", "#E4D00A", "#00FFFF", "#023020", "#7DF9FF", "#50C878", "#5F8575"
+        ]);
+      var data = pieChart(data);
+      d3.select("svg")
+        .append("g")
+        .attr("transform", "translate(660,260)")
+        .selectAll("path")
+        .data(data)
+        .enter()
+        .append("path")
+        .attr("d", newArc)
+        .style("fill", (d, i) => colorScale(i))
+        .style("stroke", "black")
+        .style("stroke-width", "1.5px")
+        .on("mouseover", function (d) {
+          d3.select("h2")
+            .text(d.data.Entity + " :" + d.data.Alcohol + "%");
+        });
+    }
+  </script>
